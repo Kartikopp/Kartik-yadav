@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlitchxKartik Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0f1b;
+  --accent1:#7c3aed;
+  --accent2:#06b6d4;
+  --text:#e6f0fb;
+  --muted:#9fb0c8;
+  --glass: rgba(255,255,255,0.03);
+  --radius:16px;
+  --ff:'Inter',system-ui,Arial;
+}
+
+/* Base */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+.container{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1;}
+section{margin-bottom: 60px;} /* Sections के बीच बेहतर स्पेसिंग */
+h2{font-size: 28px; margin-bottom: 25px; color:#fff; text-shadow:0 0 8px var(--accent1),0 0 16px var(--accent2);}
+
+/* Header */
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:50px;}
+.logo{width:64px;height:64px;background:linear-gradient(135deg,var(--accent1),var(--accent2));border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#021026;animation:flicker 2s infinite;}
+nav{display:flex;gap:15px;flex-wrap:wrap;}
+.nav-btn{padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:transparent;font-weight:700;cursor:pointer;transition:0.3s;}
+.nav-btn:hover, .nav-btn.active{background:var(--accent1);border-color:var(--accent1);transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,58,237,0.5);}
+
+/* Hero */
+.hero{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;margin-bottom:40px;}
+.hero-left{flex:1;}
+.hero-left h2{font-size:36px;margin-bottom:12px;color:#fff;text-shadow:0 0 10px var(--accent1),0 0 20px var(--accent2);}
+.hero-left p{color:var(--muted);line-height:1.5;margin-bottom:16px;font-size:16px;}
+.typing{color:var(--accent2);font-weight:800;font-size:18px;white-space:pre;}
+.cursor{display:inline-block;width:10px;background:var(--accent2);margin-left:5px;height:18px;animation:blink 1s steps(2) infinite;}
+.avatar{width:160px;height:160px;border-radius:24px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:42px;color:#021024;box-shadow:0 16px 60px rgba(6,12,30,0.6);animation:flicker 2s infinite;}
+
+/* About Section */
+#about p {
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 800px;
+    margin-bottom: 15px;
+}
+
+/* Projects */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
+.project-card{
+    background:var(--glass);
+    padding:25px;
+    border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,0.05);
+    backdrop-filter:blur(6px);
+    transition:transform 0.4s,box-shadow 0.4s;
+    text-shadow:0 0 4px rgba(0,0,0,0.3);
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(30px);
+    display: flex; /* Flexbox for internal alignment */
+    flex-direction: column; /* Stack content vertically */
+}
+.project-card:hover{transform:translateY(-10px);box-shadow:0 25px 60px rgba(124,58,237,0.8);color:#fff;}
+.project-card h3{margin-bottom:10px;color:#fff;}
+.project-card p{color:var(--muted);font-size:14px;}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.tag{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:8px;font-size:12px;color:var(--muted);}
+
+.project-card iframe {
+  width:100%;
+  height:250px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  margin-bottom: 15px; /* iframe के नीचे मार्जिन */
+  transition: transform 0.3s, box-shadow 0.3s;
+  flex-shrink: 0; /* iframe को छोटा होने से रोके */
+}
+.project-card iframe:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(124,58,237,0.6);
+}
+
+.project-actions {
+    margin-top: auto; /* Push buttons to the bottom */
+    display: flex;
+    justify-content: center; /* Center the button */
+    padding-top: 15px; /* Space above the button */
+}
+
+.preview-btn {
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    color: #021024;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+}
+.preview-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(124,58,237,0.5);
+}
+
+
+/* Skills */
+.skills{display:flex;gap:15px;flex-wrap:wrap;margin-top:20px;}
+.skill{min-width:150px;padding:15px;border-radius:16px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);opacity:0;transform:translateY(30px);}
+.meter{height:10px;border-radius:999px;background:rgba(255,255,255,0.04);overflow:hidden;margin-top:8px;}
+.meter > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0;transition:width 1.5s ease-in-out;}
+
+/* Contact */
+.contact-card{display:flex;justify-content:space-between;align-items:center;padding:25px;background:var(--glass);border-radius:20px;margin-top:30px;opacity:0;transform:translateY(30px); flex-wrap: wrap; gap: 20px;}
+.contact-card > div { flex-basis: content; }
+.contact-card p{margin-top: 5px; color: var(--muted);}
+.ig-btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021024;padding:14px 24px;border-radius:16px;border:none;font-weight:800;cursor:pointer;transition:0.3s;}
+.ig-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,0.7);}
+
+/* Footer */
+footer{text-align:center;color:var(--muted);font-size:14px;padding:20px;}
+
+/* Animations */
+@keyframes blink{50%{opacity:0}}
+@keyframes flicker{
+0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;text-shadow:0 0 10px var(--accent1),0 0 20px var(--accent2)}
+20%,22%,24%,55%{opacity:0.4;text-shadow:none}
+}
+
+/* Particles */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.2;pointer-events:none;}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero, header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-left {
+        order: 2; /* Avatar पहले आएगा मोबाइल पर */
+    }
+    .avatar {
+        margin-bottom: 30px;
+    }
+    nav {
+        margin-top: 20px;
+        justify-content: center;
+    }
+    .contact-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .project-actions {
+        padding-top: 10px;
+    }
+    .preview-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="container">
+<header>
+<div class="logo">
+ <img src="1.jpg" alt="Kartik Yadav" style="width:100%;height:100%;border-radius:16px;object-fit:cover;"></div></div>
+<nav>
+<button class="nav-btn" onclick="scrollToSection('about')">About</button>
+<button class="nav-btn" onclick="scrollToSection('projects')">Projects</button>
+<button class="nav-btn" onclick="scrollToSection('skills')">Skills</button>
+<button class="nav-btn" onclick="scrollToSection('contact')">Contact</button>
+</nav>
+</header>
+
+<main>
+<section class="hero">
+<div class="hero-left">
+<h2>Kartik Yadav | GlitchxKartik</h2>
+<p class="typing" id="typed"></p><span class="cursor"></span>
+</div>
+<div class="avatar">
+  <img src="2.jpg" alt="Kartik Yadav" style="width:100%;height:100%;border-radius:16px;object-fit:cover;"></div>
+</section>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>Hello! I'm Kartik, a passionate web and game developer from India. My journey in development began with a fascination for how digital experiences are built, and it quickly grew into a drive to create my own.</p>
+    <p>I specialize in crafting engaging user interfaces and interactive web applications using technologies like HTML, CSS, and JavaScript. I'm particularly enthusiastic about game development, where I love bringing creative ideas to life through logic and design. I'm always eager to learn new technologies, solve complex problems, and collaborate on innovative projects that push boundaries.</p>
+    <p>Beyond coding, I enjoy exploring new tech trends and experimenting with creative tools. Let's build something amazing together!</p>
+</section>
+
+<section id="projects">
+<h2>Featured Projects</h2>
+<div class="projects-grid">
+    <div class="project-card">
+      <iframe src="https://tap-hero.vercel.app/"
+              title="Tap Hero Preview" loading="lazy"></iframe>
+      <h3>Tap Hero</h3>
+      <p>Reflex-tap mobile game with dark ninja theme, built for fast-paced fun. Features AdMob integration readiness.</p>
+      <div class="tags"><span class="tag">JS</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Mobile Game</span></div>
+      <div class="project-actions">
+          <button class="preview-btn" onclick="openProject('https://tap-hero.vercel.app/')">Live Preview</button>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <iframe src="https://kartikopp.github.io/Glitchxkartik/"
+              title="GlitchxKartik Portfolio Preview" loading="lazy"></iframe>
+      <h3>GlitchxKartik Portfolio</h3>
+      <p>My personal portfolio site – fully animated, featuring a dark glitch style and responsive design for all devices.</p>
+      <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Responsive</span></div>
+      <div class="project-actions">
+          <button class="preview-btn" onclick="openProject('https://kartikopp.github.io/Glitchxkartik/')">Live Preview</button>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <iframe src="https://glitchcart.vercel.app/"
+              title="Glitch Cart Preview" loading="lazy"></iframe>
+      <h3>Glitch Cart</h3>
+      <p>An e-commerce style mini project demonstrating smooth UI/UX with a sleek dark mode. Focus on user interaction.</p>
+      <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">UI/UX</span></div>
+      <div class="project-actions">
+          <button class="preview-btn" onclick="openProject('https://glitchcart.vercel.app/')">Live Preview</button>
+      </div>
+    </div>
+</div>
+</section>
+
+<section id="skills">
+<h2>Skills & Tools</h2>
+<div class="skills">
+    <div class="skill"><strong>HTML & CSS</strong><div class="meter"><i style="width:92%"></i></div></div>
+    <div class="skill"><strong>JavaScript</strong><div class="meter"><i style="width:88%"></i></div></div>
+    <div class="skill"><strong>Game Development</strong><div class="meter"><i style="width:80%"></i></div></div>
+    <div class="skill"><strong>React</strong><div class="meter"><i style="width:75%"></i></div></div>
+    <div class="skill"><strong>UI/UX Design</strong><div class="meter"><i style="width:70%"></i></div></div>
+    <div class="skill"><strong>Version Control (Git)</strong><div class="meter"><i style="width:85%"></i></div></div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<div class="contact-card">
+<div><strong>Kartik Yadav</strong><p>Reach out for collaborations or just to say hello!</p></div>
+<button class="ig-btn" onclick="openInstagram()">Message on Instagram</button>
+</div>
+</section>
+</main>
+
+<footer>Built & designed by GlitchxKartik • 2025</footer>
+</div>
+<script>
+// Smooth scroll
+function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.nav-btn[onclick="scrollToSection('${id}')"]`).classList.add('active');
+}
+
+// Instagram button
+function openInstagram(){
+    window.open('https://instagram.com/kartik_11_2009','_blank');
+}
+
+// Open project in a new tab
+function openProject(url){
+    window.open(url, '_blank');
+}
+
+// Typing animation for taglines
+const lines = [
+    "Creative Web & Game Developer.",
+    "Pixel-perfect UI Designer.",
+    "Shipping polished projects.",
+    "Frontend & Game Dev enthusiast.",
+    "Based in India — Open for collabs."
+];
+let lineIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typed = document.getElementById('typed');
+
+function typeEffect() {
+    const currentLine = lines[lineIndex];
+    if (!isDeleting) {
+        typed.textContent = currentLine.substring(0, charIndex + 1);
+        charIndex++;
+    } else {
+        typed.textContent = currentLine.substring(0, charIndex - 1);
+        charIndex--;
+    }
+
+    if (!isDeleting && charIndex === currentLine.length) {
+        setTimeout(() => isDeleting = true, 1500); // Wait before deleting
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        lineIndex = (lineIndex + 1) % lines.length; // Move to next line
+    }
+
+    const typingSpeed = isDeleting ? 30 : 70; // Faster deleting
+    setTimeout(typeEffect, typingSpeed);
+}
+typeEffect();
+
+
+// Scroll fade-in animations and skill meter fill
+const faders = document.querySelectorAll('.project-card, .skill, .contact-card, #about p');
+const appearOptions = {threshold: 0.3};
+const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = "translateY(0)";
+        if(entry.target.classList.contains('skill')){
+            const meter = entry.target.querySelector('i');
+            meter.style.width = meter.getAttribute('style').match(/\d+%/)[0];
+        }
+        observer.unobserve(entry.target);
+    });
+}, appearOptions);
+faders.forEach(fader => appearOnScroll.observe(fader));
+
+// Particles background
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = `rgba(124,58,237,${Math.random() * 0.5 + 0.1})`;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x > canvas.width) this.x = 0;
+        if(this.x < 0) this.x = canvas.width;
+        if(this.y > canvas.height) this.y = 0;
+        if(this.y < 0) this.y = canvas.height;
+    }
+    draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function initParticles() {
+    particlesArray = [];
+    for(let i = 0; i < 140; i++) {
+        particlesArray.push(new Particle());
+    }
+}
+
+function animateParticles() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particlesArray.forEach(p => {p.update(); p.draw();});
+    requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initParticles();
+});
+</script>
+</body>
+</html>
